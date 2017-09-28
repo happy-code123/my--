@@ -1,7 +1,6 @@
 // 原生 ajax 封装
 
 ajax = {
-	//  使用get方式请求
 	/*
 		get请求参数
 		url:"" 
@@ -11,17 +10,28 @@ ajax = {
 	get:function (obj) {
 		var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
 		xhr.open("GET",obj.url,true);
-		xhr.onreadystatechange = function (){
-			if(xhr.readystate == 4 && xhr.status == 200){
-				obj.success(xhr.responseText); 
-				// 如果传过来的不是对象的话,最好转化为对象, JSON.parse() 
-			}else {
-				obj.fail(xhr.responseText);
-			}
+
+		xhr.onload = function () {
+			obj.success(xhr.responseText); 
 		}
 		xhr.send(null);
 	},
-	// 使用post方式请求
+	gett:function(obj){
+        var xhr=window.XMLHttpRequest?new window.XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP");
+        xhr.open("GET",obj.url,true);
+        xhr.onreadystatechange=function (){
+            if(xhr.readyState==4){
+                if(xhr.status==200){
+                    obj.success(xhr.responseText);
+                }else{
+                   obj.fail(xhr.responseText);
+                }
+            }
+        }
+
+        xhr.send(null);
+    },
+
 	/*
 		psot请求参数
 		url:''
@@ -34,12 +44,13 @@ ajax = {
 		var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
 		xhr.open("POST",obj.url,true);
 		xhr.onreadystatechange = function (){
-			if(xhr.readystate == 4 && xhr.status == 200){
-				obj.success(xhr.responseText); 
-				// 如果传过来的不是对象的话,最好转化为对象, JSON.parse() 
-			}else {
-				obj.fail(xhr.responseText);
-			}
+			if(xhr.readyState==4){
+                if(xhr.status==200){
+                    obj.success(xhr.responseText);
+                }else{
+                   obj.fail(xhr.responseText);
+                }
+            }
 		}
 		// 使用 post 请求提交表单，需要添加这个请求头
 		if(typeof obj.data == "string"){
