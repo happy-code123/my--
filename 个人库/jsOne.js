@@ -8,7 +8,7 @@ jsOne={
 	},
 	// 两个数内的随机数
 	randomNumber(n1,n2){
-		return parseInt(Math.random()*(n1+1-n2)+n2)
+		return parseInt(Math.random()*(n2-n1+1)+n1)
 	},
 	
 	
